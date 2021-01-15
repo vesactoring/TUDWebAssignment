@@ -107,6 +107,7 @@ function getCell(that) {
  * @param {*} newCell: the new cell that the piece will be in
  */
 function isValidMove(oldCell, newCell, side) {
+    if (newCell.className.charAt(5) != 'd') return false;
     x_coordinate = [parseInt(newCell.id.substring(0, 1)), parseInt(oldCell.id.substring(0, 1))];
     y_coordinate = [parseInt(newCell.id.substring(2,3)), oldCell.id.substring(2,3)];
     console.log(oldCell.id);
