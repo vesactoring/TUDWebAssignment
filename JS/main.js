@@ -77,11 +77,11 @@ var currentCell;
 var cells = document.getElementsByClassName("tile"); 
 for (var i = 0; i < cells.length; i++) { 
    cells[i].onclick = function(){
-       getCell(this);
+       selectTile(this);
    };
 }
 
-function getCell(that) {
+function selectTile(that) {
     if (!state && that.innerHTML == "") return; // if the select tile has no pieces => return, do nothing
     if(!state) { //no piece selected
         state = true; //piece has been selected
