@@ -52,7 +52,7 @@ body {
     margin: 0px;
     font-size: 30pt;
     padding: 0 0 0 6px;
-    cursor: pointer;
+    /* cursor: pointer; */
 }
 
 .dark {
