@@ -10,7 +10,7 @@ function initiateGame() {
     // Change the "Start game" text to "It's your turn" text
     let turn = document.getElementById('turn');
     let attribute = document.createElement("strong");
-    let newText = document.createTextNode("It's your turn");
+    let newText = document.createTextNode("It's white turn");
     attribute.appendChild(newText);
     turn.appendChild(attribute);
 
@@ -98,6 +98,9 @@ function getCell(that) {
         currentCell.innerHTML = ""; //remove the piece from its old location
         state = false; //piece has been placed, so set state back to false
         side = swap(side);
+        
+        // Change status line
+        changeStatusLine();
     }
 }
 
@@ -166,4 +169,21 @@ function swap(sideSwap) {
  */
 function lookAhead(selectedPiece) {
 
+}
+
+function changeStatusLine() {
+    let turn = document.getElementById('turn');
+    let attribute = document.createElement("strong");
+    let newText;
+    if (side) {
+        newText =  document.createTextNode("It's black turn");
+        turn.setAttribute("style", "background-color: black; color: white");
+    }
+    else {
+        newText = document.createTextNode("It's white turn");
+        turn.setAttribute("style", "background-color: white; color: black");
+    }
+    attribute.appendChild(newText);
+    turn.innerHTML = '';
+    turn.appendChild(attribute);
 }
