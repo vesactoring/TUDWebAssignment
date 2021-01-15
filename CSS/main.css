@@ -1,0 +1,58 @@
+html,
+body {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+#turn {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    margin-top: 10px;
+    max-width: 1000px;
+    max-height: 30px;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    float: right;
+    border-radius: 5px;
+    border: 1px solid rgb(0, 0, 0);
+    text-align: center;
+    padding: 5px 0 0 0;
+    background: #fff;
+}
+
+
+#DraughtBoard {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    max-width: 1000px;
+    max-height: 1000px;
+    width: 100%;
+    height: 100%;
+    /* position: relative; */
+    margin: 20px auto;
+}
+
+.tile {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    border: 1px solid #000;
+    width: 100%;
+    height: 100%;
+    max-width: 100px;
+    max-height: 100px;
+    float: left;
+    margin: 0px;
+    font-size: 30pt;
+    padding: 0 0 0 6px;
+    cursor: pointer;
+}
+
+.dark {
+    background: rgba(107, 41, 10, 0.753);
+}
