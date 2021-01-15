@@ -98,7 +98,7 @@ function getCell(that) {
         currentCell.innerHTML = ""; //remove the piece from its old location
         state = false; //piece has been placed, so set state back to false
         side = swap(side);
-        
+        console.log("Is there any piece around? " + lookAround(x_coordinate[0], y_coordinate[0]));
         // Change status line
         changeStatusLine();
     }
@@ -110,21 +110,24 @@ function getCell(that) {
  * @param {*} newCell: the new cell that the piece will be in
  */
 function isValidMove(oldCell, newCell, side) {
+    // If the piece goes to white tiles -> instant invalid move
     if (newCell.className.charAt(5) != 'd') return false;
+    // Get the coordinate
     x_coordinate = [parseInt(newCell.id.substring(0, 1)), parseInt(oldCell.id.substring(0, 1))];
-    y_coordinate = [parseInt(newCell.id.substring(2,3)), oldCell.id.substring(2,3)];
+    y_coordinate = [parseInt(newCell.id.substring(2, 3)), parseInt(oldCell.id.substring(2, 3))];
+    // console.log(x_coordinate[1]);
+    // Debug
     console.log(oldCell.id);
     console.log(newCell.id);
     console.log(side);
     console.log(oldCell.innerHTML.charAt(76));
+
     if (!side) {
         if (isValidMoveWhite(x_coordinate, y_coordinate, oldCell, newCell)) return true;
     } else {
         if (isValidMoveBlack(x_coordinate, y_coordinate, oldCell, newCell)) return true;
     }
-    // if (x_coordinate[0] != x_coordinate[1]  &&  y_coordinate[0] > y_coordinate[1]) {
-    //     return true;
-    // }
+
     return false;
 }
 
@@ -149,8 +152,8 @@ function isValidMoveBlack(x_coordinate, y_coordinate, pieceSelected, newCell) {
  * @param {*} x 
  * @param {*} y 
  */
-function capture(x, y) {
-
+function capture(x) {
+    
 }
 
 /**
@@ -167,8 +170,29 @@ function swap(sideSwap) {
  * @param {*} selectedPiece 
  * @return true if there are there are, false otherwise
  */
-function lookAhead(selectedPiece) {
+function lookAround(x, y) {
+    let xRight = x + 1;
+    let xLeft = x - 1;
+    let yAhead = y + 1;
+    let yBelow = y - 1;
 
+    let rightAhead, leftAhead, rightBelow, leftBelow;
+    // console.log("Look Around:" + xAround + "_" + yAround);
+    if (xRight >= 0 && xRight <= 9 && yAhead >=0 && yAhead <= 9)
+    rightAhead = document.getElementById(xRight + "_" + yAhead).innerHTML;
+    else rightAhead = "";
+    if (xLeft >= 0 && xLeft <= 9 && yAhead >= 0 && yAhead <= 9)
+    leftAhead = document.getElementById(xLeft + "_" + yAhead).innerHTML;
+    else leftAhead = "";
+    if (xRight >= 0 && xRight <= 9 && yBelow >=0 && yBelow <= 9)
+    rightBelow = document.getElementById(xRight + "_" + yBelow).innerHTML;
+    else rightBelow = "";
+    if (xLeft >= 0 && xLeft <= 9 && yBelow >= 0 && yBelow <= 9)
+    leftBelow = document.getElementById(xLeft + "_" + yBelow).innerHTML;
+    else leftBelow = "";
+
+    if(rightAhead != "" || leftAhead != "" || rightBelow != "" || leftBelow != "") return true;
+    return false;
 }
 
 function changeStatusLine() {
