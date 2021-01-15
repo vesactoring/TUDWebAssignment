@@ -108,6 +108,7 @@ function getCell(that) {
  * This function will return true if the move is valid, false otherwise
  * @param {*} oldCell: the selected piece to be moved
  * @param {*} newCell: the new cell that the piece will be in
+ * @param {*} side: false => white, true => black
  */
 function isValidMove(oldCell, newCell, side) {
     // If the piece goes to white tiles -> instant invalid move
@@ -131,17 +132,31 @@ function isValidMove(oldCell, newCell, side) {
     return false;
 }
 
+/**
+ * This fucntion check if the move is valid for white piece
+ * @param {*} x_coordinate: horizontal axix
+ * @param {*} y_coordinate: vertical axis
+ * @param {*} pieceSelected: the cell contain the piece
+ * @param {*} newCell: the cell which the piece will move to
+ */
 function isValidMoveWhite(x_coordinate, y_coordinate, pieceSelected, newCell) {
     if (pieceSelected.innerHTML.charAt(76) != 'w') return false;
-    if (x_coordinate[0] != x_coordinate[1]  &&  y_coordinate[0] > y_coordinate[1] && newCell.innerHTML == "") {
+    if (x_coordinate[0] != x_coordinate[1]  &&  y_coordinate[0] - y_coordinate[1] == 1 && newCell.innerHTML == "") {
         return true;
     }
     return false;
 }
 
+/**
+ * This fucntion check if the move is valid for black piece
+ * @param {*} x_coordinate: horizontal axix
+ * @param {*} y_coordinate: vertical axis
+ * @param {*} pieceSelected: the cell contain the piece
+ * @param {*} newCell: the cell which the piece will move to
+ */
 function isValidMoveBlack(x_coordinate, y_coordinate, pieceSelected, newCell) {
     if (pieceSelected.innerHTML.charAt(76) != 'b') return false;
-    if (x_coordinate[0] != x_coordinate[1]  &&  y_coordinate[0] < y_coordinate[1] && newCell.innerHTML == "") {
+    if (x_coordinate[0] != x_coordinate[1]  &&  y_coordinate[0] - y_coordinate[1] == -1 && newCell.innerHTML == "") {
         return true;
     }
     return false;
@@ -153,7 +168,7 @@ function isValidMoveBlack(x_coordinate, y_coordinate, pieceSelected, newCell) {
  * @param {*} y 
  */
 function capture(x) {
-    
+    //TODO
 }
 
 /**
@@ -166,7 +181,7 @@ function swap(sideSwap) {
 }
 
 /**
- * This function check if in front of the selected piece has any other pieces
+ * This function check if the area around the selected piece has any other pieces
  * @param {*} selectedPiece 
  * @return true if there are there are, false otherwise
  */
@@ -192,9 +207,13 @@ function lookAround(x, y) {
     else leftBelow = "";
 
     if(rightAhead != "" || leftAhead != "" || rightBelow != "" || leftBelow != "") return true;
+
     return false;
 }
 
+/**
+ * This function change the status bar in the bottom, to notify which side is playing next
+ */
 function changeStatusLine() {
     let turn = document.getElementById('turn');
     let attribute = document.createElement("strong");
