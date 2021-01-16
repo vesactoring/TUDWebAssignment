@@ -70,7 +70,7 @@ function initiateGame() {
 
 var state = false //false if no piece has been selected
 var captureAvaibality = false;
-var mustMovePiece;
+var mustMovePiece = [];
 var captureCoordinate = [];
 var side = false; // false is white, true is black
 var currentPiece;
@@ -152,17 +152,21 @@ function isValidMove(oldCell, newCell, side) {
 function isValidMoveWhite(x_coordinate, y_coordinate, pieceSelected, newCell) {
     if (pieceSelected.innerHTML.charAt(76) != 'w') return false;
     if (captureAvaibality) {
+        if (!mustMovePiece.includes(pieceSelected)) return false;
         if (captureCoordinate.includes(newCell.id)) {
             console.log(x_coordinate[1] + " " + y_coordinate[1]);
             let temp = (parseInt(newCell.id.substring(0,1)) + x_coordinate[1]) / 2;
             let temp2 = (parseInt(newCell.id.substring(2, 3)) + y_coordinate[1]) / 2;
             capture(document.getElementById(temp + "_" + temp2));
             captureCoordinate = [];
+            mustMovePiece = [];
             captureAvaibality = false;
             return true;
         }
+        return false;
     }
     if (x_coordinate[0] != x_coordinate[1]  &&  y_coordinate[0] - y_coordinate[1] == 1 && newCell.innerHTML == "") {
+        // canCapture(newCell);
         return true;
     }
     return false;
@@ -179,17 +183,21 @@ function isValidMoveBlack(x_coordinate, y_coordinate, pieceSelected, newCell) {
     if (pieceSelected.innerHTML.charAt(76) != 'b') return false;
     // canCapture(newCell);
     if (captureAvaibality) {
+        if (!mustMovePiece.includes(pieceSelected)) return false;
         if (captureCoordinate.includes(newCell.id)) {
             console.log(x_coordinate[1] + " " + y_coordinate[1]);
             let temp = (parseInt(newCell.id.substring(0,1)) + x_coordinate[1]) / 2;
             let temp2 = (parseInt(newCell.id.substring(2, 3)) + y_coordinate[1]) / 2;
             capture(document.getElementById(temp + "_" + temp2));
             captureCoordinate = [];
+            mustMovePiece = [];
             captureAvaibality = false;
             return true;
         }
+        return false;
     }
     if (x_coordinate[0] != x_coordinate[1] && y_coordinate[0] - y_coordinate[1] == -1 && newCell.innerHTML == "") {
+        // canCapture(newCell);
         return true;
     }
     return false;
@@ -214,12 +222,11 @@ function canCapture(pieceSelected) {
 
             let xEnemyTile = parseInt(enemyTile.id.substring(0, 1)) + 2;
             let yEnemyTile = parseInt(enemyTile.id.substring(2,3)) + 2;
-            console.log(enemyTile);
             let checkAvailability = document.getElementById(xEnemyTile + "_" + yEnemyTile); 
-            console.log(checkAvailability.innerHTML);
+            
             if (checkAvailability.innerHTML == "") {
                 captureAvaibality = true;
-                // mustMovePiece = enemyTile;
+                mustMovePiece.push(enemyTile);
                 captureCoordinate.push(checkAvailability.id);
             }
         }
@@ -232,24 +239,37 @@ function canCapture(pieceSelected) {
             let checkAvailability = document.getElementById(xEnemyTile + "_" + yEnemyTile); 
             if (checkAvailability.innerHTML == "") {
                 captureAvaibality = true;
-                // mustMovePiece = enemyTile;
+                mustMovePiece.push(enemyTile);
                 captureCoordinate.push(checkAvailability.id);
             }
         }
-        // if (rightBelow(pieceSelected).charAt(76) == 'w') {
-        //     let enemyTile = document.getElementById(rigthBelow(pieceSelected).substring(65, 67)).parentNode;
+        if (rightAhead(pieceSelected).charAt(76) == 'w') {
+            let enemyTile = document.getElementById(rightAhead(pieceSelected).substring(65, 67)).parentNode;
 
-        //     let xEnemyTile = parseInt(enemyTile.id.substring(0, 1)) - 2;
-        //     let yEnemyTile = parseInt(enemyTile.id.substring(2,3)) + 2;
+            let xEnemyTile = parseInt(enemyTile.id.substring(0, 1)) - 2;
+            let yEnemyTile = parseInt(enemyTile.id.substring(2,3)) - 2;
+            console.log(enemyTile);
+            let checkAvailability = document.getElementById(xEnemyTile + "_" + yEnemyTile); 
+            
+            if (checkAvailability.innerHTML == "") {
+                captureAvaibality = true;
+                mustMovePiece.push(enemyTile);
+                captureCoordinate.push(checkAvailability.id);
+            }
+        }
+        if (leftAhead(pieceSelected).charAt(76) == 'w') {
+            let enemyTile = document.getElementById(leftAhead(pieceSelected).substring(65, 67)).parentNode;
 
-        //     let checkAvailability = document.getElementById(xEnemyTile + "_" + yEnemyTile); 
-        //     if (checkAvailability.innerHTML == "") {
-        //         captureAvaibality = true;
-        //         mustMovePiece = enemyTile;
-        //         captureCoordinate.push(checkAvailability.id);
-        //     }
-        // }
-        // console.log("YES");
+            let xEnemyTile = parseInt(enemyTile.id.substring(0, 1)) + 2;
+            let yEnemyTile = parseInt(enemyTile.id.substring(2,3)) - 2;
+
+            let checkAvailability = document.getElementById(xEnemyTile + "_" + yEnemyTile); 
+            if (checkAvailability.innerHTML == "") {
+                captureAvaibality = true;
+                mustMovePiece.push(enemyTile);
+                captureCoordinate.push(checkAvailability.id);
+            }
+        }
     } else if (!side && (rightBelow(pieceSelected).charAt(76) == "b" || leftBelow(pieceSelected).charAt(76) == 'b' || rightAhead(pieceSelected).charAt(76) == 'b' || leftAhead(pieceSelected).charAt(76) == 'b')) {
         if (rightAhead(pieceSelected).charAt(76) == 'b') {
             let enemyTile = document.getElementById(rightAhead(pieceSelected).substring(65, 67)).parentNode;
@@ -258,10 +278,10 @@ function canCapture(pieceSelected) {
             let yEnemyTile = parseInt(enemyTile.id.substring(2,3)) - 2;
             console.log(enemyTile);
             let checkAvailability = document.getElementById(xEnemyTile + "_" + yEnemyTile); 
-            console.log(checkAvailability.innerHTML);
+            
             if (checkAvailability.innerHTML == "") {
                 captureAvaibality = true;
-                // mustMovePiece = enemyTile;
+                mustMovePiece.push(enemyTile);
                 captureCoordinate.push(checkAvailability.id);
             }
         }
@@ -274,10 +294,37 @@ function canCapture(pieceSelected) {
             let checkAvailability = document.getElementById(xEnemyTile + "_" + yEnemyTile); 
             if (checkAvailability.innerHTML == "") {
                 captureAvaibality = true;
-                // mustMovePiece = enemyTile;
+                mustMovePiece.push(enemyTile);
                 captureCoordinate.push(checkAvailability.id);
             }
-        }       
+        }  
+        if (leftBelow(pieceSelected).charAt(76) == 'b') {
+            let enemyTile = document.getElementById(leftBelow(pieceSelected).substring(65, 67)).parentNode;
+
+            let xEnemyTile = parseInt(enemyTile.id.substring(0, 1)) + 2;
+            let yEnemyTile = parseInt(enemyTile.id.substring(2,3)) + 2;
+            console.log(enemyTile);
+            let checkAvailability = document.getElementById(xEnemyTile + "_" + yEnemyTile); 
+            
+            if (checkAvailability.innerHTML == "") {
+                captureAvaibality = true;
+                mustMovePiece.push(enemyTile);
+                captureCoordinate.push(checkAvailability.id);
+            }
+        }
+        if (rightBelow(pieceSelected).charAt(76) == 'b') {
+            let enemyTile = document.getElementById(rightBelow(pieceSelected).substring(65, 67)).parentNode;
+
+            let xEnemyTile = parseInt(enemyTile.id.substring(0, 1)) - 2;
+            let yEnemyTile = parseInt(enemyTile.id.substring(2,3)) + 2;
+
+            let checkAvailability = document.getElementById(xEnemyTile + "_" + yEnemyTile); 
+            if (checkAvailability.innerHTML == "") {
+                captureAvaibality = true;
+                mustMovePiece.push(enemyTile);
+                captureCoordinate.push(checkAvailability.id);
+            }
+        }     
     }
     
 }
