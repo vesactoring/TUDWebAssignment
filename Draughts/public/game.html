@@ -3,11 +3,12 @@
     <head>
         <title>Draught Game</title>
         <meta charset="UTF-7">
-        <link rel="stylesheet" href="../CSS/main.css">
+        <link rel="stylesheet" href="stylesheets/style.css">
     </head>
     <body>
         <!-- <p>Test</p> -->
         <div id="DraughtBoard">
+            <div id='header'><div>Welcome</div></div>
             <!--9-->
             <div class='tile' id='0_9'></div>
             <div class='tile dark' id='1_9'></div>
@@ -122,21 +123,11 @@
             <div class="tile dark" id="8_0"></div>
             <div class="tile" id="9_0"></div>
             <br><br>
-            <div class='bar'>
-                <p class="p">0</p> 
-                <p class="p">1</p> 
-                <p class="p">2</p>
-                <p class="p">3</p>
-                <p class="p">4</p>
-                <p class="p">5</p>
-                <p class="p">6</p>
-                <p class="p">7</p>
-                <p class="p">8</p>
-                <p class="p">9</p>
-            </div>
-            <div id='turn'></div>
+            <div id='turn'><div>Waiting for player to connect...</div></div>
         </div>
+        <script src="javascripts/BlackPiece.js"></script>
+        <script src="javascripts/WhitePiece.js"></script> 
+        <script src="javascripts/Game.js"></script>
+        <script src="javascripts/index.js"></script>
     </body>
 </html>
-<script src="../JS/initiate.js"></script>
-<script src="../JS/main.js"></script>

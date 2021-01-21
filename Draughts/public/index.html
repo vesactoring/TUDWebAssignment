@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Draught Game</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <h1>WELCOME TO THE SERVER</h1>
+        <section>
+            <form action="/play" method="GET">
+                <button type="submit" onclick="sendSignal()">PLAY</button>
+            </form>
+        </section>>
+    </body>
+</html>
+<script>
+    function sendSignal() {
+    const ws = new websocket("ws://localhost:3000");
+    ws.onopen = (event) => {
+        ws.send(JSON.stringify({
+            message: "proceedToGame"
+        }));
+    }
+}
+</script>
