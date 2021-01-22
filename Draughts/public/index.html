@@ -1,0 +1,34 @@
+    <html>
+    <head>
+    <script>
+    function show(shown, hidden, hidden) {
+      document.getElementById(shown).style.display='block';
+      document.getElementById(hidden).style.display='none';
+      document.getElementById(hidden).style.display='none';
+      return false;
+    }
+    </script>
+    <title>Draught Game</title> 
+    <meta charset="UTF-7"> 
+    <link rel="stylesheet" href="stylesheets/main.css">
+    </head>
+    <body class = "adder">
+    
+      <div id="Page1">
+        <a href="#Page2" class="button" onclick="return show('Page2','Page1', 'Page3');">HOW TO PLAY</a>
+        <form action="/play" method="GET" class="button">
+            <button type="submit">PLAY</button>
+            </form>
+      </div>
+    
+      <div id="Page2">
+        <a href="#" class ="button" submitsubmitk="return show('Page1','Page2','Page3');">Main page</a>
+        <a href="#Page3" class ="button" onclick="return show('Page3','Page1', 'Page2');">PLAY</a>
+      </div>
+
+
+
+    </body>
+    </html>
+    <script src="../JS/initiate.js"></script>
+    <script src="../JS/main.js"></script>
