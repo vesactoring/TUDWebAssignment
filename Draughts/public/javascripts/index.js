@@ -48,7 +48,7 @@ function selectTile(that) {
         selected = false; //piece has been placed, so set selected back to false
         changeHeaderLine("your move sucks kek (jk)");
         newGame.playSound("NormalMove.wav");
-        turnKing(that, currentPiece);
+        promoteKing(that, currentPiece);
         ws.send(JSON.stringify({
             message: "move",
             from: currentCell.id,
@@ -75,8 +75,11 @@ function selectTile(that) {
 }
 
 function update(from, to, die, piece) {
+    if (from != null && from != undefined)
     from.innerHTML = "";
+    if (to != null && to != undefined)
     to.innerHTML = piece;
+    if (die != null && die != undefined)
     die.innerHTML = "";
 }
 
@@ -107,18 +110,18 @@ function isValidMove(from, to, piece) {
         return false;
     }
 
-    if (x_coordinate[0] != x_coordinate[1] && y_coordinate[0] - y_coordinate[1] == 1 && temp.innerHTML == "" && side == "w" && piece.charAt(76) == "w") {
+    if (x_coordinate[0] != x_coordinate[1] && y_coordinate[0] - y_coordinate[1] == 1 && temp.innerHTML == "" && side == "w" && piece.charAt(77) !== "w") {
         return true;
-    } else if (x_coordinate[0] != x_coordinate[1] && y_coordinate[0] - y_coordinate[1] == -1 && temp.innerHTML == "" && side == "b" && piece.charAt(76) == "b") {
+    } else if (x_coordinate[0] != x_coordinate[1] && y_coordinate[0] - y_coordinate[1] == -1 && temp.innerHTML == "" && side == "b" && piece.charAt(77) !== "b") {
         return true;
-    } else if (x_coordinate[0] != x_coordinate[1] && temp.innerHTML == "" && piece.charAt(76) == "k") {
+    } else if (x_coordinate[0] != x_coordinate[1] && temp.innerHTML == "" && piece.charAt(77) == "k" && y_coordinate[0] != y_coordinate[1]) {
         return true;
     }
     return false;
 }
 
 function scanForCaptureAvalability() {
-    for (let i = 0, j = 0; i < cells.length; i++) {
+    for (let i = 0; i < cells.length; i++) {
         if (cells[i].innerHTML.charAt(76) == side) {
             lookForCaptureAvailability(cells[i].id);
         }
@@ -199,15 +202,24 @@ function isTileAvailableForCapture(yourX, yourY, opX, opY) {
     return false;
 }
 
-function turnKing(to, piece) {
-    if (piece.charAt(76) == "k") return;
+function promoteKing(to, piece) {
     if (side == "w", to.id.substring(2,3) == "9") {
         let containerWhiteKing = document.createElement("div");
         containerWhiteKing.setAttribute("style", "position: Absolute, width: 90%; cursor: pointer");
         containerWhiteKing.setAttribute("id", piece.substring(65, 67));
-        containerWhiteKing.setAttribute("class", "kw");
+        containerWhiteKing.setAttribute("class", "wk");
         let whiteKingPiece = document.createElement("img");
         whiteKingPiece.src = "../images/whiteking.png";
+        whiteKingPiece.setAttribute("style", "width: 90%; margin-top: 30%");
+        containerWhiteKing.appendChild(whiteKingPiece);
+        currentPiece = containerWhiteKing.outerHTML;
+    } else if (side == "b", to.id.substring(2,3) == "0") {
+        let containerWhiteKing = document.createElement("div");
+        containerWhiteKing.setAttribute("style", "position: Absolute, width: 90%; cursor: pointer");
+        containerWhiteKing.setAttribute("id", piece.substring(65, 67));
+        containerWhiteKing.setAttribute("class", "bk");
+        let whiteKingPiece = document.createElement("img");
+        whiteKingPiece.src = "../images/blackking.png";
         whiteKingPiece.setAttribute("style", "width: 90%; margin-top: 30%");
         containerWhiteKing.appendChild(whiteKingPiece);
         currentPiece = containerWhiteKing.outerHTML;
@@ -324,3 +336,4 @@ ws.onmessage = (message) => {
         ws.close();
     }
 }
+

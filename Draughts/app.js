@@ -23,9 +23,9 @@ userList.push("trash");
 userList.push("trash");
 
 wss.on("connection", function (ws) {
-  userList.push(ws);
+  userList.push(ws); // 0; 1
   online++;
-  ws.id = ++id;
+  ws.id = ++id; // 1; 2 - 2
   console.log("New Connection " + online);
   console.log(gameFinished + " number of game which finished");
   ws.send(JSON.stringify({
@@ -70,7 +70,7 @@ wss.on("connection", function (ws) {
     if (data.hasFinish == "I win") {
       gameFinished++;
       ongoingGame--;
-      if (ws.id % 2 == 0) {
+      if (ws.id % 2 == 0) { // 4 -> 2, 3
         userList[ws.id - 2].send(JSON.stringify({
           message: "loser",
         }))
@@ -78,6 +78,7 @@ wss.on("connection", function (ws) {
           message: "winner",
         }))
       } else {
+        // 3 -> 2, 3
         userList[ws.id].send(JSON.stringify({
           message: "loser",
         }))

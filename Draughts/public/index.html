@@ -13,13 +13,3 @@
         </section>>
     </body>
 </html>
-<script>
-    function sendSignal() {
-    const ws = new websocket("ws://localhost:3000");
-    ws.onopen = (event) => {
-        ws.send(JSON.stringify({
-            message: "proceedToGame"
-        }));
-    }
-}
-</script>

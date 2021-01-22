@@ -7,6 +7,6 @@ var White = {
 var WhiteKing = {
     image: "../images/whiteking.png",
     color: "kw",
-    container: document.createElement("div").setAttribute(),
+    container: document.createElement("div"),
     style: "position: Absolute, width: 90%; cursor: pointer",
 }
