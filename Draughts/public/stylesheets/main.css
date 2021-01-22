@@ -1,0 +1,98 @@
+html,
+.adder #Page1 {
+    background-image: url("../images/splash.png");
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.adder #Page2 {
+    background-image: url("../images/instructions.png");
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.adder #Page3 {
+    background-image: url("../images/flatbackground.png");
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+.button::before {
+  content: "*";
+}
+.button::after {
+  content: "*";
+}
+.button {
+    display: inline-block;
+    width: 175px;
+    height: 30px;
+    background: #4E9CAF;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    line-height: 25px;
+    margin: bottom left;
+}
+
+.image1 {
+    float:left;
+    margin: top left;
+    animation-name: a;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes a {
+    0% { transform: translate(0,  0px); }
+    50%  { transform: translate(0, 300px); }
+    100%   { transform: translate(0, -0px); }
+}
+
+.image2 {
+    float:right;
+    margin: bottom right;
+    animation-name: b;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes b {
+    0% { transform: translate(0,  0px); }
+    50%  { transform: translate(0, 300px); }
+    100%   { transform: translate(0, -0px); }
+}
+
+
+.p {
+    margin: 0;
+    width: 10%;
+    text-align: center;
+    float: left;
+    font-weight: bold;
+}
+
+.dark {
+    background: rgba(0, 0, 0, 0.60);
+}
+
+.dark:hover {
+    background-color: rgba(123, 225, 112, 1);
+}
+
+.dark:active {
+    border: 5px solid yellow;
+    background: rgba(0, 0, 0, 0.60);
+}

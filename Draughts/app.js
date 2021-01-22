@@ -1,18 +1,26 @@
 // First setup //
-const express = require("express");
-const http = require("http");
-const websocket = require("ws");
-const app = express();
-const indexRouter = require("./routes/index");
+var express = require("express");
+var http = require("http");
+var websocket = require("ws");
+var app = express();
+var indexRouter = require("./routes/index");
 // First setup //
 
 // Redirect to the game //
-app.use(express.static(__dirname + "/Public"));
+var port = process.argv[2];
+app.set("view engine", "ejs");
+app.use(express.static(__dirname + "/public"));
 app.get("/play", indexRouter);
 // Redirect to the game //
+app.get("/", (req, res) => {
+  res.render("index", {
+    gamesInitialized: ongoingGame,
+    gamesCompleted: gameFinished,
+  })
+});
 
 // Create Websocket on server-side //
-const server = http.createServer(app);
+var server = http.createServer(app);
 const wss = new websocket.Server({ server });
 // Create Websocket on server-side //
 
@@ -139,6 +147,7 @@ wss.on("connection", function (ws) {
   }
 }
 })
+
 // Open Connection //
-server.listen(3000);
+server.listen(port);
 console.log("server is running");

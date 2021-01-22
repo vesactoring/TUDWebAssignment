@@ -75,11 +75,11 @@ function selectTile(that) {
 }
 
 function update(from, to, die, piece) {
-    if (from != null && from != undefined)
+    if (from != null)
     from.innerHTML = "";
-    if (to != null && to != undefined)
+    if (to != null)
     to.innerHTML = piece;
-    if (die != null && die != undefined)
+    // if (die != null)
     die.innerHTML = "";
 }
 
